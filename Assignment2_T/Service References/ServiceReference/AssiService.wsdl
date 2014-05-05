@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="check">
+        <s:complexType />
+      </s:element>
+      <s:element name="checkResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="checkResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="reutrnHos">
+        <s:complexType />
+      </s:element>
+      <s:element name="reutrnHosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reutrnHosResult" type="tns:ArrayOfMyHospital" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMyHospital">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MyHospital" nillable="true" type="tns:MyHospital" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MyHospital">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="License" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="reutrnDoc">
+        <s:complexType />
+      </s:element>
+      <s:element name="reutrnDocResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="reutrnDocResult" type="tns:ArrayOfMyDoctor" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfMyDoctor">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="MyDoctor" nillable="true" type="tns:MyDoctor" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="MyDoctor">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Address" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Gender" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="date" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="License" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="checkSoapIn">
+    <wsdl:part name="parameters" element="tns:check" />
+  </wsdl:message>
+  <wsdl:message name="checkSoapOut">
+    <wsdl:part name="parameters" element="tns:checkResponse" />
+  </wsdl:message>
+  <wsdl:message name="reutrnHosSoapIn">
+    <wsdl:part name="parameters" element="tns:reutrnHos" />
+  </wsdl:message>
+  <wsdl:message name="reutrnHosSoapOut">
+    <wsdl:part name="parameters" element="tns:reutrnHosResponse" />
+  </wsdl:message>
+  <wsdl:message name="reutrnDocSoapIn">
+    <wsdl:part name="parameters" element="tns:reutrnDoc" />
+  </wsdl:message>
+  <wsdl:message name="reutrnDocSoapOut">
+    <wsdl:part name="parameters" element="tns:reutrnDocResponse" />
+  </wsdl:message>
+  <wsdl:portType name="AssiServiceSoap">
+    <wsdl:operation name="check">
+      <wsdl:input message="tns:checkSoapIn" />
+      <wsdl:output message="tns:checkSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="reutrnHos">
+      <wsdl:input message="tns:reutrnHosSoapIn" />
+      <wsdl:output message="tns:reutrnHosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="reutrnDoc">
+      <wsdl:input message="tns:reutrnDocSoapIn" />
+      <wsdl:output message="tns:reutrnDocSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AssiServiceSoap" type="tns:AssiServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="check">
+      <soap:operation soapAction="http://tempuri.org/check" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="reutrnHos">
+      <soap:operation soapAction="http://tempuri.org/reutrnHos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="reutrnDoc">
+      <soap:operation soapAction="http://tempuri.org/reutrnDoc" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AssiServiceSoap12" type="tns:AssiServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="check">
+      <soap12:operation soapAction="http://tempuri.org/check" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="reutrnHos">
+      <soap12:operation soapAction="http://tempuri.org/reutrnHos" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="reutrnDoc">
+      <soap12:operation soapAction="http://tempuri.org/reutrnDoc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AssiService">
+    <wsdl:port name="AssiServiceSoap" binding="tns:AssiServiceSoap">
+      <soap:address location="http://localhost:2912/AssiService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AssiServiceSoap12" binding="tns:AssiServiceSoap12">
+      <soap12:address location="http://localhost:2912/AssiService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

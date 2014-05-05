@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Assignment2" Class="DataBaseAllDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=LYN-PC;Initial Catalog=Assignment2;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="Assignment2ConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Doctor" Member="Doctors">
+    <Type Name="Doctor">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Gender" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DoB" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="License" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Association Name="Doctor_Visit" Member="Visits" ThisKey="ID" OtherKey="DoctorID" Type="Visit" />
+      <Association Name="Doctor_LabOrder" Member="LabOrders" ThisKey="ID" OtherKey="DoctorID" Type="LabOrder" />
+      <Association Name="Doctor_Prescription" Member="Prescriptions" ThisKey="ID" OtherKey="DoctorID" Type="Prescription" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Visit" Member="Visits">
+    <Type Name="Visit">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="HospitalID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DoctorID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PatientID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ICDID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="PrescripID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LabID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Outcome" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Association Name="Doctor_Visit" Member="Doctor" ThisKey="DoctorID" OtherKey="ID" Type="Doctor" IsForeignKey="true" />
+      <Association Name="Hospital_Visit" Member="Hospital" ThisKey="HospitalID" OtherKey="ID" Type="Hospital" IsForeignKey="true" />
+      <Association Name="ICD_Visit" Member="ICD" ThisKey="ICDID" OtherKey="ID" Type="ICD" IsForeignKey="true" />
+      <Association Name="LabOrder_Visit" Member="LabOrder" ThisKey="LabID" OtherKey="ID" Type="LabOrder" IsForeignKey="true" />
+      <Association Name="Patient_Visit" Member="Patient" ThisKey="PatientID" OtherKey="ID" Type="Patient" IsForeignKey="true" />
+      <Association Name="Prescription_Visit" Member="Prescription" ThisKey="PrescripID" OtherKey="ID" Type="Prescription" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Drug" Member="Drugs">
+    <Type Name="Drug">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DrugName" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="GenericName" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Unit" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="drugGroup" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Drug_PrescriptionDetail" Member="PrescriptionDetails" ThisKey="ID" OtherKey="DrugID" Type="PrescriptionDetail" />
+      <Association Name="DrugGroup_Drug" Member="DrugGroup1" ThisKey="drugGroup" OtherKey="ID" Type="DrugGroup" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DrugGroup" Member="DrugGroups">
+    <Type Name="DrugGroup">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Association Name="DrugGroup_Drug" Member="Drugs" ThisKey="ID" OtherKey="drugGroup" Type="Drug" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Hospital" Member="Hospitals">
+    <Type Name="Hospital">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="License" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Association Name="Hospital_Visit" Member="Visits" ThisKey="ID" OtherKey="HospitalID" Type="Visit" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ICD" Member="ICDs">
+    <Type Name="ICD">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Code" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="ICDChapter" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="ICD_Visit" Member="Visits" ThisKey="ID" OtherKey="ICDID" Type="Visit" />
+      <Association Name="ICDChapter_ICD" Member="ICDChapter1" ThisKey="ICDChapter" OtherKey="ID" Type="ICDChapter" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ICDChapter" Member="ICDChapters">
+    <Type Name="ICDChapter">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Association Name="ICDChapter_ICD" Member="ICDs" ThisKey="ID" OtherKey="ICDChapter" Type="ICD" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LabOrder" Member="LabOrders">
+    <Type Name="LabOrder">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DoctorID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="LabOrder_Visit" Member="Visits" ThisKey="ID" OtherKey="LabID" Type="Visit" />
+      <Association Name="LabOrder_LabOrderDetail" Member="LabOrderDetails" ThisKey="ID" OtherKey="LabOrderID" Type="LabOrderDetail" />
+      <Association Name="Doctor_LabOrder" Member="Doctor" ThisKey="DoctorID" OtherKey="ID" Type="Doctor" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LabOrderDetail" Member="LabOrderDetails">
+    <Type Name="LabOrderDetail">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Result" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="LabOrderID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MedicalServiceID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="LabOrder_LabOrderDetail" Member="LabOrder" ThisKey="LabOrderID" OtherKey="ID" Type="LabOrder" IsForeignKey="true" />
+      <Association Name="MedicalService_LabOrderDetail" Member="MedicalService" ThisKey="MedicalServiceID" OtherKey="ID" Type="MedicalService" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MedicalService" Member="MedicalServices">
+    <Type Name="MedicalService">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MedicalGroupID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="MedicalService_LabOrderDetail" Member="LabOrderDetails" ThisKey="ID" OtherKey="MedicalServiceID" Type="LabOrderDetail" />
+      <Association Name="MedicalServiceGroup_MedicalService" Member="MedicalServiceGroup" ThisKey="MedicalGroupID" OtherKey="ID" Type="MedicalServiceGroup" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MedicalServiceGroup" Member="MedicalServiceGroups">
+    <Type Name="MedicalServiceGroup">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Association Name="MedicalServiceGroup_MedicalService" Member="MedicalServices" ThisKey="ID" OtherKey="MedicalGroupID" Type="MedicalService" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Patient" Member="Patients">
+    <Type Name="Patient">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Gender" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DoB" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="Address" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Association Name="Patient_Visit" Member="Visits" ThisKey="ID" OtherKey="PatientID" Type="Visit" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Prescription" Member="Prescriptions">
+    <Type Name="Prescription">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="DoctorID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Association Name="Prescription_Visit" Member="Visits" ThisKey="ID" OtherKey="PrescripID" Type="Visit" />
+      <Association Name="Prescription_PrescriptionDetail" Member="PrescriptionDetails" ThisKey="ID" OtherKey="PrescripID" Type="PrescriptionDetail" />
+      <Association Name="Doctor_Prescription" Member="Doctor" ThisKey="DoctorID" OtherKey="ID" Type="Doctor" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PrescriptionDetail" Member="PrescriptionDetails">
+    <Type Name="PrescriptionDetail">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="PrescripID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DrugID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Dose" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Instruction" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Association Name="Drug_PrescriptionDetail" Member="Drug" ThisKey="DrugID" OtherKey="ID" Type="Drug" IsForeignKey="true" />
+      <Association Name="Prescription_PrescriptionDetail" Member="Prescription" ThisKey="PrescripID" OtherKey="ID" Type="Prescription" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Role" Member="Roles">
+    <Type Name="Role">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDRole" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[User]" Member="Users">
+    <Type Name="User">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserAcc" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Password" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="Role" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
